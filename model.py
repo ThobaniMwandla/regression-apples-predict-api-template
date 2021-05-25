@@ -60,13 +60,19 @@ def _preprocess_data(data):
 
     # ----------- Replace this code with your own preprocessing steps --------
     
+    # adding three dummy varibles from date column
+    feature_vector_df.date = pd.to_datetime(feature_vector_df.Date) 
+    feature_vector_df["Quarter"] = feature_vector_df.date.dt.quarter 
+    feature_vector_df["Month"] = feature_vector_df.date.dt.month
+    feature_vector_df["Year"] = feature_vector_df.date.dt.year
 
-    feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
-    predict_vector = feature_vector_df[['Total_Qty_Sold','Stock_On_Hand']]
-                                
-    # ------------------------------------------------------------------------
+    # Don't need the date calumn anymore
+    feature_vector_df = feature_vector_df.drop('Date', axis=1)
+    
+    # Dummy variables
+    dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
 
-    return predict_vector
+    return dummy_df
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
