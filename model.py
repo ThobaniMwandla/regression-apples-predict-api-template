@@ -61,6 +61,9 @@ def _preprocess_data(data):
     # ----------- Replace this code with your own preprocessing steps --------
     
     # adding three dummy varibles from date column
+    feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
+
+    # converting date column into proper date formart
     feature_vector_df.date = pd.to_datetime(feature_vector_df.Date) 
     feature_vector_df["Quarter"] = feature_vector_df.date.dt.quarter 
     feature_vector_df["Month"] = feature_vector_df.date.dt.month
@@ -68,7 +71,7 @@ def _preprocess_data(data):
 
     # Don't need the date calumn anymore
     feature_vector_df = feature_vector_df.drop('Date', axis=1)
-    
+
     # Dummy variables
     dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
 
