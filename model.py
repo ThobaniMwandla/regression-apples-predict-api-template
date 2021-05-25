@@ -64,18 +64,18 @@ def _preprocess_data(data):
     feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
 
     # converting date column into proper date formart
-    feature_vector_df.date = pd.to_datetime(feature_vector_df.Date) 
-    feature_vector_df["Quarter"] = feature_vector_df.date.dt.quarter 
-    feature_vector_df["Month"] = feature_vector_df.date.dt.month
-    feature_vector_df["Year"] = feature_vector_df.date.dt.year
+    # feature_vector_df.date = pd.to_datetime(feature_vector_df.Date) 
+    # feature_vector_df["Quarter"] = feature_vector_df.date.dt.quarter 
+    # feature_vector_df["Month"] = feature_vector_df.date.dt.month
+    # feature_vector_df["Year"] = feature_vector_df.date.dt.year
 
     # Don't need the date calumn anymore
-    feature_vector_df = feature_vector_df.drop('Date', axis=1)
+    # feature_vector_df = feature_vector_df.drop('Date', axis=1)
 
     # Dummy variables
-    dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
+    # dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
 
-    return dummy_df
+    return feature_vector_df
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
