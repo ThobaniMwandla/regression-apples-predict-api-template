@@ -75,7 +75,10 @@ def _preprocess_data(data):
     # # Dummy variables
     dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
 
-    return dummy_df
+    # remove target variable
+    dummy_df_notarget = dummy_df.drop('avg_price_per_kg', axis=1)
+
+    return dummy_df_notarget
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
