@@ -59,24 +59,23 @@ def _preprocess_data(data):
     # ---------------------------------------------------------------
 
     # ----------- Replace this code with your own preprocessing steps --------
-    # adding three dummy varibles from date column
-    feature_vector_df = feature_vector_df[(feature_vector_df['Commodities'] == 'APPLE GOLDEN DELICIOUS')]
-    # predict_vector = feature_vector_df[['Total_Qty_Sold','Stock_On_Hand']]
+    df_gda = feature_vector_df[feature_vector_df.Commodities == 'APPLE GOLDEN DELICIOUS']
+    df_gda.date = pd.to_datetime(df_gda.Date) 
+    df_gda["Quarter"] = df_gda.date.dt.quarter 
+    df_gda["Month"] = df_gda.date.dt.month
+    df_gda["Year"] = df_gda.date.dt.year
 
-    # converting date column into proper date formart
-    feature_vector_df["date"] = pd.to_datetime(feature_vector_df["Date"]) 
-    feature_vector_df["Quarter"] = feature_vector_df["date"].dt.quarter 
-    feature_vector_df["Month"] = feature_vector_df["date"].dt.month
-    feature_vector_df["Year"] = feature_vector_df["date"].dt.year    
+    # drop date column
+    df_gda = df_gda.drop('Date', axis=1)
 
-    # # Don't need the date calumn anymore
-    feature_vector_df = feature_vector_df.drop(['date', 'Date'], axis=1)
+    # get dummy variables
+    dummy_df = pd.get_dummies(df_gda, drop_first=True)
 
-    # # Dummy variables
-    dummy_df = pd.get_dummies(feature_vector_df, drop_first=True)
+    #dropping avg_price_per_kg column if avaliable
+    if dummy_df['avg_price_per_kg']:
+        dummy_df.drop('avg_price_per_kg', axis=1)
 
-    # remove target variable
-    # dummy_df_notarget = dummy_df.drop('avg_price_per_kg', axis=1)
+    dummy_df.drop('avg_price_per_kg', axis=1)
 
     return dummy_df
 
