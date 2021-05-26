@@ -72,8 +72,8 @@ def _preprocess_data(data):
     dummy_df = pd.get_dummies(df_gda, drop_first=True)
 
     #dropping avg_price_per_kg column if avaliable
-    if dummy_df['avg_price_per_kg']:
-        dummy_df.drop('avg_price_per_kg', axis=1)
+    # if dummy_df['avg_price_per_kg']:
+    #     dummy_df.drop('avg_price_per_kg', axis=1)
 
     return dummy_df
 
