@@ -75,8 +75,6 @@ def _preprocess_data(data):
     if dummy_df['avg_price_per_kg']:
         dummy_df.drop('avg_price_per_kg', axis=1)
 
-    dummy_df.drop('avg_price_per_kg', axis=1)
-
     return dummy_df
 
 def load_model(path_to_model:str):
