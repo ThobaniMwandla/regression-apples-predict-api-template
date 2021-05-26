@@ -50,32 +50,10 @@ def _preprocess_data(data):
     # Load the dictionary as a Pandas DataFrame.
     feature_vector_df = pd.DataFrame.from_dict([feature_vector_dict])
 
-    # ---------------------------------------------------------------
-    # NOTE: You will need to swap the lines below for your own data
-    # preprocessing methods.
-    #
-    # The code below is for demonstration purposes only. You will not
-    # receive marks for submitting this code in an unchanged state.
-    # ---------------------------------------------------------------
+    df_gda = feature_vector_df[feature_vector_df["Commodities"] == 'APPLE GOLDEN DELICIOUS']
+    feature_vector_df = df_gda[["Weight_Kg", "Low_Price", "High_Price", "Sales_Total", "Total_Qty_Sold", "Total_Kg_Sold", "Stock_On_Hand"]]
 
-    # ----------- Replace this code with your own preprocessing steps --------
-    df_gda = feature_vector_df[feature_vector_df.Commodities == 'APPLE GOLDEN DELICIOUS']
-    df_gda.date = pd.to_datetime(df_gda.Date) 
-    df_gda["Quarter"] = df_gda.date.dt.quarter 
-    df_gda["Month"] = df_gda.date.dt.month
-    df_gda["Year"] = df_gda.date.dt.year
-
-    # drop date column
-    df_gda = df_gda.drop('Date', axis=1)
-
-    # get dummy variables
-    dummy_df = pd.get_dummies(df_gda, drop_first=True)
-
-    #dropping avg_price_per_kg column if avaliable
-    # if dummy_df['avg_price_per_kg']:
-    #     dummy_df.drop('avg_price_per_kg', axis=1)
-
-    return dummy_df
+    return feature_vector_df
 
 def load_model(path_to_model:str):
     """Adapter function to load our pretrained model into memory.
